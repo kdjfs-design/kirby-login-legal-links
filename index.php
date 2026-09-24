@@ -30,6 +30,7 @@ Kirby::plugin('kdjfs/login-legal-links', [
     'blueprints' => [
         'fields/login-legal-links' => fn ($kirby) => BlueprintFactory::fieldGroup($kirby),
     ],
+    'areas' => require __DIR__ . '/plugin/areas.php',
     'translations' => [
         'en' => require __DIR__ . '/translations/en.php',
         'de' => require __DIR__ . '/translations/de.php',
