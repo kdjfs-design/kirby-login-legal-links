@@ -50,7 +50,7 @@ panel.plugin("kdjfs/login-legal-links", {
                 const originalView = this.$options.extends.options.render.call(this, h);
                 const slotChildren = originalView?.componentOptions?.children;
 
-                // Unknown structure after a Kirby update: show the login as it is
+                // Nothing to show, or unknown structure after a Kirby update: show the login as it is
                 if (this.legalLinks.length === 0 || Array.isArray(slotChildren) === false) {
                     return originalView;
                 }

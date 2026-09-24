@@ -61,9 +61,7 @@ final class LegalLinks
             }
         }
 
-        if ($links === [] && $this->warnings === []) {
-            $this->warn('none');
-        } elseif ($links === [] && $this->hasOnlyConfigWarning() === true) {
+        if ($links === [] && ($this->warnings === [] || $this->hasOnlyConfigWarning() === true)) {
             $this->warn('none');
         }
 
