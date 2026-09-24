@@ -64,7 +64,7 @@ return [
 
 ### Im Panel
 
-Die Feldgruppe in den Site-Blueprint aufnehmen. Den Feldnamen bestimmen Sie
+Die Feldgruppe in den Site-Blueprint aufnehmen. Den Feldnamen bestimmst du
 selbst:
 
 ```yaml
@@ -118,9 +118,9 @@ der Standardsprache. Die Texte im Panel liegen auf Englisch und Deutsch bei.
 
 ## Die Arbeit unterstützen
 
-Wenn Ihnen das Plugin Zeit spart, können Sie mir
-[einen Kaffee ausgeben](https://buymeacoffee.com/janstieler) oder etwas per
-[PayPal](https://paypal.me/kdjfs) schicken.
+Wenn dir das Plugin Arbeit erspart, kannst du mir gern
+[einen Kaffee ausgeben](https://buymeacoffee.com/janstieler) oder direkt etwas
+per [PayPal](https://paypal.me/kdjfs) beisteuern.
 
 ## Aufbau
 
