@@ -17,7 +17,8 @@ final class BlueprintFactory
 {
     /**
      * Characters Kirby would interpret in a help text: `{}` for query
-     * templates, `()` for KirbyTags, the rest for Markdown. A colon is turned
+     * templates, `()` for KirbyTags, `*_~` for Markdown emphasis and
+     * strikethrough, the rest for other Markdown syntax. A colon is turned
      * into an entity because Markdown (Parsedown) autolinks bare `http(s)://`
      * addresses, which the escaped parentheses alone do not prevent. HTML
      * special characters are handled by Escape::html() before.
@@ -34,6 +35,7 @@ final class BlueprintFactory
         '`'  => '&#96;',
         '\\' => '&#92;',
         ':'  => '&#58;',
+        '~'  => '&#126;',
     ];
 
     /**

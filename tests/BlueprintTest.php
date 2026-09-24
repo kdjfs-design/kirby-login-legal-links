@@ -100,7 +100,7 @@ class BlueprintTest extends PluginTestCase
         $kirby = $this->kirby([
             'site'    => ['content' => ['title' => 'GEHEIM']],
             'options' => ['kdjfs.login-legal-links' => ['links' => [
-                ['label' => '<b>fett</b> {{ site.title }} (link: https://evil.example) *x*', 'link' => 'impressum'],
+                ['label' => '<b>fett</b> {{ site.title }} (link: https://evil.example) *x* ~~weg~~', 'link' => 'impressum'],
             ]]],
         ]);
 
@@ -110,6 +110,7 @@ class BlueprintTest extends PluginTestCase
         $this->assertStringNotContainsString('GEHEIM', $help);
         $this->assertStringNotContainsString('<a ', $help);
         $this->assertStringNotContainsString('<em>', $help);
+        $this->assertStringNotContainsString('<del>', $help);
         $this->assertStringContainsString('&lt;b&gt;fett&lt;/b&gt;', $help);
     }
 
