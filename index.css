@@ -16,8 +16,13 @@
     list-style: none;
 }
 
-/* Visual separator only – the empty alt text keeps screen readers quiet */
+/*
+ * Visual separator only – the empty alt text keeps screen readers quiet.
+ * Browsers without alt text support (Safari before 17.4) drop the second
+ * declaration and keep the first, so the dot still shows there.
+ */
 .k-login-legal-links li + li::before {
+    content: "·";
     content: "·" / "";
     margin-inline-end: var(--spacing-3);
 }
