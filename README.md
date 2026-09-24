@@ -107,6 +107,13 @@ English and German texts for the Panel.
   loaded last wins.
 - A Kirby update that changes the login view may hide the links. The login
   itself keeps working.
+- With `debug` enabled, the reports about left-out entries reach every
+  visitor of the login page, signed in or not, including the configured link
+  values. Keep `debug` off on publicly reachable sites.
+- Everyone who may edit the site in the Panel decides which links appear on
+  the login page – including external addresses. If editors should not be
+  able to change them, leave the field group out of the site blueprint and
+  set the links in the configuration only.
 
 ## Support the work
 

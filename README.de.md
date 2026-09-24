@@ -115,6 +115,14 @@ der Standardsprache. Die Texte im Panel liegen auf Englisch und Deutsch bei.
   die Quere; es gilt das zuletzt geladene.
 - Ändert ein Kirby-Update die Anmeldeansicht, können die Links verschwinden.
   Die Anmeldung selbst funktioniert weiter.
+- Bei eingeschaltetem `debug` erreichen die Meldungen über weggelassene
+  Einträge jeden, der die Anmeldeseite aufruft, auch ohne Anmeldung – samt der
+  konfigurierten Linkziele. Auf öffentlich erreichbaren Websites sollte `debug`
+  deshalb aus sein.
+- Wer die Site im Panel bearbeiten darf, bestimmt, welche Links auf der
+  Anmeldeseite stehen – auch externe Adressen. Sollen Redakteure das nicht
+  ändern können, bindest du die Feldgruppe nicht in den Site-Blueprint ein und
+  setzt die Links nur in der Konfiguration.
 
 ## Die Arbeit unterstützen
 
