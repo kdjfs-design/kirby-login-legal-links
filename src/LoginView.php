@@ -42,7 +42,7 @@ final class LoginView
                 : [];
         } catch (Throwable $exception) {
             // The view goes out as the core built it; the cause only reaches the server log
-            error_log('login-legal-links: ' . $exception->getMessage());
+            error_log('login-legal-links: ' . $exception::class . ': ' . $exception->getMessage());
         }
 
         return $view;
