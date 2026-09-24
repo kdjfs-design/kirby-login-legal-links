@@ -2,3 +2,7 @@
 /kirby/
 /.phpunit.cache/
 composer.lock
+
+# Runtime files Kirby writes below the fixture root while the tests run
+# (UUID cache, panel sessions, …) – not part of the plugin.
+/tests/fixtures/site/
