@@ -1,0 +1,4 @@
+/vendor/
+/kirby/
+/.phpunit.cache/
+composer.lock

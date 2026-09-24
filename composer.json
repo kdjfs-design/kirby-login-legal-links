@@ -1,0 +1,58 @@
+{
+    "name": "kdjfs/login-legal-links",
+    "description": "Adds links to the imprint, privacy policy and other legal pages to the Kirby Panel login",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "keywords": [
+        "kirby",
+        "kirby-plugin",
+        "kirby-cms",
+        "panel",
+        "login",
+        "gdpr",
+        "imprint",
+        "privacy"
+    ],
+    "homepage": "https://github.com/kdjfs-design/kirby-login-legal-links",
+    "authors": [
+        {
+            "name": "Kommunikationsdesign Jan-Frederik Stieler",
+            "email": "kontakt@janstieler.de"
+        }
+    ],
+    "funding": [
+        {
+            "type": "buymeacoffee",
+            "url": "https://buymeacoffee.com/janstieler"
+        },
+        {
+            "type": "custom",
+            "url": "https://paypal.me/kdjfs"
+        }
+    ],
+    "require": {
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "getkirby/composer-installer": "^1.2"
+    },
+    "require-dev": {
+        "getkirby/cms": "^5.2",
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kdjfs\\LoginLegalLinks\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "getkirby/composer-installer": true
+        },
+        "optimize-autoloader": true
+    },
+    "extra": {
+        "kirby-plugin-path": "site/plugins"
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
