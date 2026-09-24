@@ -13,8 +13,8 @@ return [
     'kdjfs.login-legal-links.warning.config'        => 'Die Option kdjfs.login-legal-links.links ist keine Liste und wird ignoriert.',
     'kdjfs.login-legal-links.warning.entry'         => 'Eintrag {{ position }} ist keine Liste aus Beschriftung und Link und wird übersprungen.',
     'kdjfs.login-legal-links.warning.label'         => 'Eintrag {{ position }} hat keine Beschriftung und wird übersprungen.',
-    'kdjfs.login-legal-links.warning.link'          => 'Eintrag „{{ label }}” hat keinen Link und wird übersprungen.',
-    'kdjfs.login-legal-links.warning.page'          => 'Eintrag „{{ label }}” übersprungen – Seite „{{ link }}” nicht gefunden.',
-    'kdjfs.login-legal-links.warning.draft'         => 'Eintrag „{{ label }}” übersprungen – Seite „{{ link }}” ist ein Entwurf.',
-    'kdjfs.login-legal-links.warning.scheme'        => 'Eintrag „{{ label }}” übersprungen – nur http- und https-Links sind erlaubt.',
+    'kdjfs.login-legal-links.warning.link'          => 'Eintrag „{{ label }}“ hat keinen Link und wird übersprungen.',
+    'kdjfs.login-legal-links.warning.page'          => 'Eintrag „{{ label }}“ übersprungen – Seite „{{ link }}“ nicht gefunden.',
+    'kdjfs.login-legal-links.warning.draft'         => 'Eintrag „{{ label }}“ übersprungen – Seite „{{ link }}“ ist ein Entwurf.',
+    'kdjfs.login-legal-links.warning.scheme'        => 'Eintrag „{{ label }}“ übersprungen – nur http- und https-Links sind erlaubt.',
 ];
