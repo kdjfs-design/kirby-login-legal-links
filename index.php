@@ -1,5 +1,6 @@
 <?php
 
+use Kdjfs\LoginLegalLinks\BlueprintFactory;
 use Kirby\Filesystem\F;
 
 /**
@@ -10,6 +11,7 @@ use Kirby\Filesystem\F;
  */
 F::loadClasses([
     'kdjfs\\loginlegallinks\\legallinks' => __DIR__ . '/src/LegalLinks.php',
+    'kdjfs\\loginlegallinks\\blueprintfactory' => __DIR__ . '/src/BlueprintFactory.php',
 ]);
 
 /**
@@ -25,6 +27,9 @@ Kirby::plugin('kdjfs/login-legal-links', [
         'newTab' => false,
     ],
     'fields' => require __DIR__ . '/plugin/fields.php',
+    'blueprints' => [
+        'fields/login-legal-links' => fn ($kirby) => BlueprintFactory::fieldGroup($kirby),
+    ],
     'translations' => [
         'en' => require __DIR__ . '/translations/en.php',
         'de' => require __DIR__ . '/translations/de.php',
