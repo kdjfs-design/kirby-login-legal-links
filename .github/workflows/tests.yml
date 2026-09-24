@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   tests:
-    name: PHP ${{ matrix.php }}
+    name: PHP ${{ matrix.php }}${{ matrix.dependencies == 'lowest' && ' (lowest dependencies)' || '' }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,6 +20,12 @@ jobs:
       matrix:
         # The range composer.json declares
         php: ['8.2', '8.3', '8.4', '8.5']
+        dependencies: ['highest']
+        include:
+          # The oldest versions composer.json allows, above all Kirby 5.2 –
+          # the minimum the README promises
+          - php: '8.2'
+            dependencies: 'lowest'
 
     steps:
       - name: Checkout
@@ -40,7 +46,30 @@ jobs:
       # getkirby/cms is a dev dependency and of type kirby-cms, so the
       # composer installer puts it into ./kirby rather than the vendor directory
       - name: Install dependencies
+        if: matrix.dependencies == 'highest'
         run: composer install --no-interaction --no-progress --prefer-dist
+
+      # Composer refuses versions with security advisories by default (since
+      # 2.9), and old Kirby releases have some. Without switching that off, the
+      # resolver would quietly pick a newer Kirby and the job would test the
+      # wrong thing. Written straight into composer.json under the old and the
+      # new name of the setting: `composer config` rejects keys a given
+      # Composer version does not know, composer.json simply ignores them.
+      - name: Install lowest dependencies
+        if: matrix.dependencies == 'lowest'
+        run: |
+          php -r '$composer = json_decode(file_get_contents("composer.json"), true);
+            $composer["config"]["audit"]["block-insecure"] = false;
+            $composer["config"]["policy"]["advisories"]["block"] = false;
+            file_put_contents("composer.json", json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));'
+          composer update --prefer-lowest --prefer-stable --no-interaction --no-progress --prefer-dist
+
+      - name: Check that the lowest Kirby is installed
+        if: matrix.dependencies == 'lowest'
+        run: |
+          installed=$(composer show getkirby/cms --format=json | php -r 'echo json_decode(stream_get_contents(STDIN))->versions[0];')
+          echo "getkirby/cms $installed"
+          test "$installed" = "5.2.0"
 
       - name: Tests
         run: composer test

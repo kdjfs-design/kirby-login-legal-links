@@ -108,6 +108,13 @@ cd site/plugins/login-legal-links
 composer install && composer test  # standalone repository
 ```
 
+CI runs the suite on every supported PHP version with the newest
+dependencies, and once more on PHP 8.2 with the oldest ones composer.json
+allows. That run checks that Kirby 5.2.0 is really installed – the minimum
+the README promises, set by `Field::emptyValue()` (`@since 5.2.0`). To repeat
+it locally, copy the plugin to a separate directory and run
+`composer update --prefer-lowest --prefer-stable && composer test` there.
+
 `AreaTest::testCoreLoginActionStillHasTheExpectedShape` is the early warning
 for Kirby updates: if it fails, read `kirby/config/areas/login.php` first.
 
