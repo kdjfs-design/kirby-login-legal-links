@@ -82,7 +82,7 @@ class BlueprintTest extends PluginTestCase
         I18n::$locale = 'de';
 
         $this->assertSame(
-            'In der Konfiguration hinterlegt: Impressum → impressum, Datenschutz → https://example.org/privacy. '
+            'In der Konfiguration hinterlegt: Impressum → impressum, Datenschutz → https&#58;//example.org/privacy. '
             . 'Sobald hier ein Eintrag einen Link hat, gilt nur diese Liste.',
             BlueprintFactory::fieldGroup($kirby)['help']
         );

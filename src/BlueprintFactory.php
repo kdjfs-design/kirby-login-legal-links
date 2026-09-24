@@ -17,8 +17,10 @@ final class BlueprintFactory
 {
     /**
      * Characters Kirby would interpret in a help text: `{}` for query
-     * templates, `()` for KirbyTags, the rest for Markdown. HTML special
-     * characters are handled by Escape::html() before.
+     * templates, `()` for KirbyTags, the rest for Markdown. A colon is turned
+     * into an entity because Markdown (Parsedown) autolinks bare `http(s)://`
+     * addresses, which the escaped parentheses alone do not prevent. HTML
+     * special characters are handled by Escape::html() before.
      */
     private const HELP_ENTITIES = [
         '{'  => '&#123;',
@@ -31,6 +33,7 @@ final class BlueprintFactory
         '_'  => '&#95;',
         '`'  => '&#96;',
         '\\' => '&#92;',
+        ':'  => '&#58;',
     ];
 
     /**
@@ -87,7 +90,7 @@ final class BlueprintFactory
         }
 
         $summary = implode(', ', array_map(
-            fn (array $entry) => static::escape($entry['label'], preventAutolink: true) . ' → ' . static::escape($entry['link']),
+            fn (array $entry) => static::escape($entry['label']) . ' → ' . static::escape($entry['link']),
             $entries
         ));
 
@@ -97,29 +100,11 @@ final class BlueprintFactory
     /**
      * Makes a configured value safe for Kirby's help pipeline.
      *
-     * `$preventAutolink` additionally breaks Parsedown's automatic linking of
-     * a bare URL, which matches on a literal `scheme://` and is unrelated to
-     * the `HELP_ENTITIES` above (parentheses and braces do not stop it). Only
-     * the two slashes right after `http:` or `https:` are touched, so other
-     * slashes in the value – e.g. from an escaped closing tag – stay intact.
-     * Used for the label, which is free text and must never turn into a
-     * clickable element. The link value is left as is: it is meant to read as
-     * a URL or page id, so a valid one is allowed to render as a link to
-     * itself – that is not a way to inject content, only to see the same
-     * value twice.
-     *
      * @param string $value Label or link from the configuration
-     * @param bool $preventAutolink Whether to also stop bare-URL autolinking
      * @return string Value that renders as plain text
      */
-    private static function escape(string $value, bool $preventAutolink = false): string
+    private static function escape(string $value): string
     {
-        $escaped = strtr(Escape::html($value), self::HELP_ENTITIES);
-
-        if ($preventAutolink === true) {
-            $escaped = preg_replace('/(https?):\/\//i', '$1:&#47;&#47;', $escaped);
-        }
-
-        return $escaped;
+        return strtr(Escape::html($value), self::HELP_ENTITIES);
     }
 }
