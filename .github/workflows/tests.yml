@@ -1,0 +1,84 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Every version reports for itself; a failure on one must not hide the rest
+      fail-fast: false
+      matrix:
+        # The range composer.json declares
+        php: ['8.2', '8.3', '8.4', '8.5']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          # The extensions Kirby requires, from its own composer.json
+          extensions: ctype, curl, dom, filter, hash, iconv, json, libxml, mbstring, openssl, simplexml
+          coverage: none
+
+      # Before the install, so only the plugin's own files are checked
+      - name: Syntax check
+        run: find . -name '*.php' -print0 | xargs -0 -n1 -P4 php -l
+
+      # getkirby/cms is a dev dependency and of type kirby-cms, so the
+      # composer installer puts it into ./kirby rather than the vendor directory
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Tests
+        run: composer test
+
+  dist:
+    name: Dist archive
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # `composer require` installs the archive git produces from the
+      # export-ignore rules in .gitattributes, not the repository. A wrong rule
+      # there stays invisible in every other check: the tests keep passing while
+      # the installed plugin is missing a file – or ships the test suite.
+      - name: Check what composer require would install
+        run: |
+          archive=$(git archive HEAD | tar -t)
+          status=0
+
+          for entry in composer.json index.php index.css index.js LICENSE SECURITY.md \
+                       README.md README.de.md plugin/ src/ translations/; do
+              if ! grep -qxF "$entry" <<< "$archive"; then
+                  echo "missing from the dist archive: $entry"
+                  status=1
+              fi
+          done
+
+          for entry in tests/ .github/ ARCHITECTURE.md phpunit.xml .gitattributes .gitignore; do
+              if grep -qF "$entry" <<< "$archive"; then
+                  echo "should not ship: $entry"
+                  status=1
+              fi
+          done
+
+          if [ "$status" -eq 0 ]; then
+              echo "Dist archive as expected ($(wc -l <<< "$archive") entries)"
+          fi
+
+          exit "$status"

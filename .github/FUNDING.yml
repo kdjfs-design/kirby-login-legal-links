@@ -1,0 +1,4 @@
+# Shows a "Sponsor" button in the repository sidebar and on issues.
+# Same two ways as the README, kept here because GitHub reads only this file.
+buy_me_a_coffee: janstieler
+custom: ["https://paypal.me/kdjfs"]

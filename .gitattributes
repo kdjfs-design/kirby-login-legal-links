@@ -1,0 +1,9 @@
+# Keeps development files out of the dist archive Composer downloads on install.
+# They stay in the repository – only `composer require` installs without them.
+# The READMEs stay in: they are the documentation of the installed plugin.
+/ARCHITECTURE.md export-ignore
+/.github         export-ignore
+/tests           export-ignore
+/phpunit.xml     export-ignore
+/.gitattributes  export-ignore
+/.gitignore      export-ignore
