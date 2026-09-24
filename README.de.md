@@ -125,8 +125,8 @@ per [PayPal](https://paypal.me/kdjfs) beisteuern.
 ## Aufbau
 
 Wie sich das Plugin in das Panel einfügt und warum es so gebaut ist, steht in
-[ARCHITECTURE.md](ARCHITECTURE.md) – nur auf Englisch, weil sich das an
-Mitentwickelnde richtet.
+[ARCHITECTURE.md](https://github.com/kdjfs-design/kirby-login-legal-links/blob/main/ARCHITECTURE.md)
+– nur auf Englisch, weil sich das an Mitentwickelnde richtet.
 
 ## Lizenz
 

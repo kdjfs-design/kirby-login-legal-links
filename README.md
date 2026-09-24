@@ -116,7 +116,8 @@ If this plugin saves you time, you can
 
 ## Internals
 
-How the plugin hooks into the Panel, and why: [ARCHITECTURE.md](ARCHITECTURE.md).
+How the plugin hooks into the Panel, and why:
+[ARCHITECTURE.md](https://github.com/kdjfs-design/kirby-login-legal-links/blob/main/ARCHITECTURE.md).
 
 ## Licence
 
