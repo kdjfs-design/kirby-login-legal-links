@@ -12,6 +12,7 @@ use Kirby\Filesystem\F;
 F::loadClasses([
     'kdjfs\\loginlegallinks\\legallinks' => __DIR__ . '/src/LegalLinks.php',
     'kdjfs\\loginlegallinks\\blueprintfactory' => __DIR__ . '/src/BlueprintFactory.php',
+    'kdjfs\\loginlegallinks\\loginview' => __DIR__ . '/src/LoginView.php',
 ]);
 
 /**

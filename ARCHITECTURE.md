@@ -10,14 +10,17 @@ it is built this way. For usage see the [README](README.md).
    core area with `array_replace_recursive` (`kirby/src/Cms/Loader.php`,
    `areas()`), so only the view action is replaced.
 2. The action (`plugin/areas.php`) calls the original action from
-   `$kirby->core()->area('login')`. That loads the core areas without plugins
-   (`kirby/src/Cms/Core.php`, `load()`), so there is no recursion.
+   `$kirby->core()->area('login')` and hands the result to
+   `LoginView::extend()` (`src/LoginView.php`). Loading the core area goes
+   without plugins (`kirby/src/Cms/Core.php`, `load()`), so there is no
+   recursion.
 3. `LegalLinks::resolve()` (`src/LegalLinks.php`) picks the source: the first
    field of type `login-legal-links` in the site blueprint if one of its rows
    has a link, otherwise the option `links`. Each entry is resolved into
    label and absolute URL or dropped with a warning.
-4. The action adds `legalLinks`, `legalLinksNewTab` and `legalLinksWarnings`
-   (the latter only with `debug`) to the props of the original view.
+4. `LoginView::extend()` adds `legalLinks`, `legalLinksNewTab` and
+   `legalLinksWarnings` (the latter only with `debug`) to the props of the
+   original view.
 5. In the Panel, the wrapped `k-login-view` (`index.js`) calls the inherited
    render function and appends a `<nav>` to the slot children of its root
    component `k-panel-outside`.
@@ -27,7 +30,8 @@ it is built this way. For usage see the [README](README.md).
 | File | Responsibility |
 |---|---|
 | `index.php` | Registration only |
-| `plugin/areas.php` | Wrapper around the login view action |
+| `plugin/areas.php` | Replaces the login view action with one that calls the original |
+| `src/LoginView.php` | Adds the props to the view; passes anything unexpected through |
 | `plugin/fields.php` | Field type `login-legal-links` |
 | `src/LegalLinks.php` | Source selection, resolution, validation, warnings |
 | `src/BlueprintFactory.php` | Field group `fields/login-legal-links` with presets and help |
@@ -83,8 +87,10 @@ it is built this way. For usage see the [README](README.md).
   saving the site once would silently switch off the configuration.
 - **Field found by type.** Developers name the field as they like.
 - **Drop, never throw.** Every problem with an entry drops that entry. The
-  whole resolution runs inside a `try` in the area action; on failure the view
-  goes out exactly as the core built it.
+  whole resolution runs inside a `try` in `LoginView::extend()`; on failure
+  the view goes out exactly as the core built it. A view without a props
+  array passes through untouched. The class exists so this can be tested
+  with any view, not only with the one the installed Kirby version builds.
 - **Only http and https.** Anything else, including `javascript:` in any
   spelling and protocol-relative URLs, is dropped.
 - **Text colour for the links.** `--color-text-dimmed` falls below 4.5:1
