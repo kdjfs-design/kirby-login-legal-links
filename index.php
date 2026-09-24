@@ -24,6 +24,7 @@ Kirby::plugin('kdjfs/login-legal-links', [
         'links'  => [],
         'newTab' => false,
     ],
+    'fields' => require __DIR__ . '/plugin/fields.php',
     'translations' => [
         'en' => require __DIR__ . '/translations/en.php',
         'de' => require __DIR__ . '/translations/de.php',

@@ -107,13 +107,45 @@ final class LegalLinks
     }
 
     /**
-     * Returns the entries of the source in charge.
+     * Returns the entries of the source in charge: the Panel list if one of
+     * its rows has a link, otherwise the configuration.
      *
      * @return list<mixed> Raw entries, validated one by one in resolveEntry()
      */
     private function entries(): array
     {
+        $panelRows = $this->panelRows();
+
+        foreach ($panelRows as $row) {
+            if (is_array($row) === true && $this->linkValue($row['link'] ?? null) !== '') {
+                return $panelRows;
+            }
+        }
+
         return $this->configRows();
+    }
+
+    /**
+     * Reads the rows of the first field of the plugin's type in the site
+     * blueprint. The field name is up to the developer.
+     *
+     * @return list<mixed> Stored rows, empty if there is no such field or it was never saved
+     */
+    private function panelRows(): array
+    {
+        $site = $this->kirby->site();
+
+        foreach ($site->blueprint()->fields() as $name => $definition) {
+            if (($definition['type'] ?? null) !== self::FIELD_TYPE) {
+                continue;
+            }
+
+            $languageCode = $this->kirby->multilang() === true ? $this->siteLanguageCode() : null;
+
+            return array_values($site->content($languageCode)->get($name)->yaml());
+        }
+
+        return [];
     }
 
     /**
