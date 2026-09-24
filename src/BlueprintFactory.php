@@ -102,11 +102,17 @@ final class BlueprintFactory
     /**
      * Makes a configured value safe for Kirby's help pipeline.
      *
+     * Line breaks become spaces first: Markdown blocks (headings, rules,
+     * lists, quotes, code) start at the beginning of a line, and the value
+     * must not be able to start one.
+     *
      * @param string $value Label or link from the configuration
-     * @return string Value that renders as plain text
+     * @return string Value that renders as plain text on a single line
      */
     private static function escape(string $value): string
     {
-        return strtr(Escape::html($value), self::HELP_ENTITIES);
+        $singleLine = str_replace(["\r\n", "\r", "\n"], ' ', $value);
+
+        return strtr(Escape::html($singleLine), self::HELP_ENTITIES);
     }
 }

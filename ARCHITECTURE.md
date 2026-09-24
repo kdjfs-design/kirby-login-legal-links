@@ -58,7 +58,9 @@ it is built this way. For usage see the [README](README.md).
 - **Help texts are templates.** A field's help runs through `toSafeString()`
   (query templates) and `kirbytext()` (KirbyTags, Markdown, HTML) before the
   Panel renders it as HTML (`kirby/src/Form/Field.php`, computed `help`).
-  Configured values are therefore HTML-escaped first, and then each of these
+  Configured values therefore lose their line breaks first – Markdown blocks
+  such as headings, rules, lists or code start at the beginning of a line –
+  are then HTML-escaped, and then each of these
   characters is turned into a numeric entity (`BlueprintFactory::escape()`,
   list in `BlueprintFactory::HELP_ENTITIES`):
   `{` `}` for query templates, `(` `)` for KirbyTags, `[` `]` `*` `_` `` ` ``

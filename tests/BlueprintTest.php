@@ -114,6 +114,30 @@ class BlueprintTest extends PluginTestCase
         $this->assertStringContainsString('&lt;b&gt;fett&lt;/b&gt;', $help);
     }
 
+    /**
+     * Markdown blocks start at the beginning of a line. A line break inside a
+     * configured value would let the rest of the value start one: a heading,
+     * a rule, a list, a quote or a code block.
+     *
+     * @return void
+     */
+    public function testHelpKeepsMultiLineValuesOnOneLine(): void
+    {
+        $kirby = $this->kirby([
+            'options' => ['kdjfs.login-legal-links' => ['links' => [
+                ['label' => "Impressum\n# Überschrift\r\n---\r- Liste\n> Zitat\n    Code", 'link' => "impressum\n# Link"],
+            ]]],
+        ]);
+
+        $help = $this->field($kirby)->help();
+
+        foreach (['<h1', '<hr', '<ul', '<blockquote', '<pre', '<code'] as $blockTag) {
+            $this->assertStringNotContainsString($blockTag, $help);
+        }
+
+        $this->assertSame(1, substr_count($help, '<p>'));
+    }
+
     protected function tearDown(): void
     {
         I18n::$locale = 'en';
