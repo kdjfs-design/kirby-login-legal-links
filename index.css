@@ -1,0 +1,33 @@
+/*
+ * Link list below the login dialog. Text colour instead of --color-text-dimmed:
+ * the dimmed grey falls below the 4.5:1 contrast WCAG requires for small text
+ * on the Panel background.
+ */
+.k-login-legal-links {
+    margin-top: var(--spacing-6);
+    font-size: var(--text-sm);
+}
+
+.k-login-legal-links ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-1) var(--spacing-3);
+    list-style: none;
+}
+
+/* Visual separator only – the empty alt text keeps screen readers quiet */
+.k-login-legal-links li + li::before {
+    content: "·" / "";
+    margin-inline-end: var(--spacing-3);
+}
+
+.k-login-legal-links a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.k-login-legal-links a:hover {
+    text-decoration-thickness: 2px;
+}
