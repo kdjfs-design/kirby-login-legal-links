@@ -126,11 +126,13 @@ plugin's `try`.
 
 ### What the suite cannot answer
 
-Rendering in the Panel. Start a local server **without OPcache** – the CLI
-server otherwise serves PHP files up to 60 seconds old:
+Rendering in the Panel. Start a local server **without OPcache** – otherwise
+it keeps serving the config and plugin files from the first request until
+`opcache.revalidate_freq` has passed. The built-in server follows
+`opcache.enable`; `opcache.enable_cli=0` does not switch it off:
 
 ```bash
-php -d opcache.enable_cli=0 -S localhost:8765 kirby/router.php
+php -d opcache.enable=0 -S localhost:8765 kirby/router.php
 ```
 
 Then check `/panel/login` in light and dark mode, with the login code form
