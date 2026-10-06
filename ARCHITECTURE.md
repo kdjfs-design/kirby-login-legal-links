@@ -98,6 +98,16 @@ it is built this way. For usage see the [README](README.md).
   light and 16:1 in the dark theme, measured against the background of
   `<html>` – the Panel's `body` is transparent.
 
+- **Version declared in `index.php`.** The Panel's update check compares
+  against the installed version. Kirby takes it from Composer's
+  `installed.php` first, then from the `version` argument of
+  `Kirby::plugin()` (`Plugin/Plugin.php`, `::version()`). A copy or a ZIP download has no Composer metadata,
+  so without the argument the Panel cannot check for updates. The release
+  script in the development repository sets the number in the same step that
+  creates the tag; the `version` job in `.github/workflows/tests.yml` fails
+  when a pushed tag disagrees with it. `composer.json` carries no version,
+  Packagist takes it from the tag.
+
 ## Verifying locally
 
 ### The test suite

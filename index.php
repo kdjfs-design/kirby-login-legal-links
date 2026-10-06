@@ -21,6 +21,10 @@ F::loadClasses([
  * `require` rather than `require_once`: the latter returns `true` instead of
  * the array once a file has already been included, which would turn an
  * extension into a boolean without any error.
+ *
+ * `version` is what the Panel's update check compares against when the plugin
+ * was copied or downloaded rather than installed with Composer. It is set by
+ * the release script, never by hand; CI fails when a tag disagrees with it.
  */
 Kirby::plugin('kdjfs/login-legal-links', [
     'options' => [
@@ -36,4 +40,4 @@ Kirby::plugin('kdjfs/login-legal-links', [
         'en' => require __DIR__ . '/translations/en.php',
         'de' => require __DIR__ . '/translations/de.php',
     ],
-]);
+], version: '1.0.0');
